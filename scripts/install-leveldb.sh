@@ -5,6 +5,7 @@ set -ex
 LEVELDB_VERSION=1.23
 
 SUDO=$(command -v sudo || true)
+INSTALL_PREFIX="/usr/local"
 
 # Check env
 if [[ "$(uname)" == "Darwin" ]]; then
@@ -35,9 +36,10 @@ if [[ "$(uname)" == "Darwin" ]]; then
 fi
 
 if [[ "$(uname)" == "Darwin" ]]; then
-    export C_INCLUDE_PATH=/usr/local/include # where find snappy header files
-    export CPLUS_INCLUDE_PATH=/usr/local/include # where find snappy header files
-    export LIBRARY_PATH=/usr/local/lib # where find snappy library
+    INSTALL_PREFIX="${PLYVEL_INSTALL_PREFIX:-$HOME/.local}"
+    export C_INCLUDE_PATH=$INSTALL_PREFIX/include # where find snappy header files
+    export CPLUS_INCLUDE_PATH=$INSTALL_PREFIX/include # where find snappy header files
+    export LIBRARY_PATH=$INSTALL_PREFIX/lib # where find snappy library
 fi
 
 
@@ -52,12 +54,13 @@ cd leveldb-*
 
 # `CMAKE_INSTALL_NAME_DIR` and `CMAKE_SKIP_INSTALL_RPATH` only have effect for MacOS
 if [[ "$(uname)" == "Darwin" ]]; then
-    INSTALL_NAME_DIR="/usr/local/lib"
+    INSTALL_NAME_DIR="$INSTALL_PREFIX/lib"
 fi
 
 mkdir -p build && cd build
 cmake \
     -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX \
     -DBUILD_SHARED_LIBS=ON \
     -DCMAKE_SKIP_INSTALL_RPATH=OFF \
     -DCMAKE_INSTALL_NAME_DIR=$INSTALL_NAME_DIR \

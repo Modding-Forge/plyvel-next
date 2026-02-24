@@ -52,14 +52,18 @@ patch < $PATCH_FILE
 # Set `INSTALL_NAME_DIR` to set the install name of shared library to be an absolute path instead of `@rpath/{target_name}`, which will help delocate the `wheel` 
 # Or use `install_name_tool -change <old-path> <new-path> <file>` after .dylib was created
 
+INSTALL_PREFIX="/usr/local"
+
 if [[ "$(uname)" == "Darwin" ]]; then
-    INSTALL_NAME_DIR="/usr/local/lib"
+    INSTALL_PREFIX="${PLYVEL_INSTALL_PREFIX:-$HOME/.local}"
+    INSTALL_NAME_DIR="$INSTALL_PREFIX/lib"
 fi
 
 mkdir -p build && cd build
 cmake \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
+    -DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX \
     -DBUILD_SHARED_LIBS=ON \
     -DCMAKE_SKIP_INSTALL_RPATH=OFF \
     -DCMAKE_INSTALL_NAME_DIR=$INSTALL_NAME_DIR \

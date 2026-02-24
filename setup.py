@@ -49,6 +49,7 @@ setup(
     author_email="wouter@bolsterl.ee",
     ext_modules=cythonize(ext_modules, build_dir='build'),
     packages=['plyvel'],
+    python_requires=">=3.12,<3.15",
     license="BSD License",
     classifiers=[
         "Development Status :: 5 - Production/Stable",
@@ -60,8 +61,8 @@ setup(
         "Programming Language :: C++",
         "Programming Language :: Cython",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 2",
         "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.12",
         "Programming Language :: Python :: 3.13",
         "Programming Language :: Python :: 3.14",
         "Topic :: Database",

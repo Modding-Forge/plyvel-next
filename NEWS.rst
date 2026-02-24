@@ -7,6 +7,8 @@ Unreleased
 
 * Add Python 3.14 support
 
+* Drop support for Python 3.7 through 3.11
+
 Plyvel 1.5.1
 ============
 

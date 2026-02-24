@@ -19,10 +19,10 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Install Python 3.8
+      - name: Install Python 3.12
         uses: actions/setup-python@v5
         with:
-          python-version: 3.8
+          python-version: 3.12
 
       - name: Install dependencies
         run: |
@@ -49,33 +49,33 @@ jobs:
             name: mac-intel
             cibw:
               arch: x86_64
-              build: "cp38-*"
+              build: "cp312-*"
 
           - os: macos-latest
             name: mac-arm
             cibw:
               arch: universal2
-              build: "cp38-* cp39-* cp310-* cp311-* cp312-* cp313-* cp314-*"
+              build: "cp312-* cp313-* cp314-*"
 
           - os: ubuntu-latest
             name: manylinux
             cibw:
               arch: "auto aarch64"
-              build: "cp38-* cp39-* cp310-* cp311-* cp312-* cp313-* cp314-*"
+              build: "cp312-* cp313-* cp314-*"
 
           - os: windows-2019
             name: win32
             architecture: x86
             cibw:
               arch: x86
-              build: "cp38-* cp39-* cp310-* cp311-* cp312-* cp313-* cp314-*"
+              build: "cp312-* cp313-* cp314-*"
 
           - os: windows-2019
             name: win_amd64
             architecture: x64
             cibw:
               arch: AMD64
-              build: "cp38-* cp39-* cp310-* cp311-* cp312-* cp313-* cp314-*" #cp38*win_amd64 cp39*win_amd64"
+              build: "cp312-* cp313-* cp314-*"
     env:
       VCPKG_INCLUDE_PATH: "C:/vcpkg/installed/${{ matrix.architecture }}-windows/include"
       VCPKG_LIB_PATH: "C:/vcpkg/installed/${{ matrix.architecture }}-windows/lib"
@@ -117,7 +117,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.12"
           architecture: ${{ matrix.architecture }}
 
       - name: Set up QEMU

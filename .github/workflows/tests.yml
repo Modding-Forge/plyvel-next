@@ -32,6 +32,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
+          name: sdist
           path: ./dist/*.tar.gz
 
   wheel:
@@ -148,4 +149,5 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
+          name: wheel-${{ matrix.name }}
           path: ./wheelhouse/*.whl

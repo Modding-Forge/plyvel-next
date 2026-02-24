@@ -44,7 +44,7 @@ fi
 # Prepare leveldb source code
 mkdir -p ~/opt/leveldb
 cd ~/opt/leveldb
-curl -sL leveldb.tar.gz https://codeload.github.com/google/leveldb/tar.gz/${LEVELDB_VERSION} | tar xzf -
+curl -sL https://codeload.github.com/google/leveldb/tar.gz/${LEVELDB_VERSION} | tar xzf -
 cd leveldb-*
 
 

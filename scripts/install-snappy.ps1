@@ -12,6 +12,8 @@ if ($env:CIBW_ARCHS_WINDOWS -eq "x86") {
     exit
 }
 
+$generators = @("Visual Studio 17 2022", "Visual Studio 16 2019")
+
 
 # Prepare snappy source code
 $url="https://codeload.github.com/google/snappy/tar.gz/$SNAPPY_VERSION"
@@ -27,12 +29,26 @@ Set-Location snappy-*
 $INSTALL_PREFIX="C:\local"
 
 mkdir build -ea 0; Set-Location build
-cmake -G "Visual Studio 16 2019" -A $arch `
-    -DCMAKE_INSTALL_PREFIX="$INSTALL_PREFIX" `
-    -DBUILD_SHARED_LIBS=ON `
-    -DCMAKE_POSITION_INDEPENDENT_CODE=ON `
-    -DSNAPPY_BUILD_BENCHMARKS=OFF `
-    -DSNAPPY_BUILD_TESTS=OFF `
-    ..
+$configured = $false
+foreach ($generator in $generators) {
+    if (Test-Path "CMakeCache.txt") { Remove-Item "CMakeCache.txt" -Force }
+    cmake -G $generator -A $arch `
+        -DCMAKE_INSTALL_PREFIX="$INSTALL_PREFIX" `
+        "-DCMAKE_POLICY_VERSION_MINIMUM=3.5" `
+        -DBUILD_SHARED_LIBS=ON `
+        -DCMAKE_POSITION_INDEPENDENT_CODE=ON `
+        -DSNAPPY_BUILD_BENCHMARKS=OFF `
+        -DSNAPPY_BUILD_TESTS=OFF `
+        ..
+    if ($LASTEXITCODE -eq 0) {
+        $configured = $true
+        break
+    }
+}
+
+if (-not $configured) {
+    Write-Output "Failed to configure snappy with all known generators"
+    exit 1
+}
 
 cmake --build . --target install --config Release

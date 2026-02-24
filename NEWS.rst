@@ -2,6 +2,11 @@
 Version history
 ===============
 
+Unreleased
+==========
+
+* Add Python 3.14 support
+
 Plyvel 1.5.1
 ============
 

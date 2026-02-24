@@ -14,11 +14,18 @@ def get_file_contents(filename):
     with open(join(CURRENT_DIR, filename)) as fp:
         return fp.read()
 
-# add "-fno-rtti" fix `Symbol not found: __ZTIN7leveldb10ComparatorE` when using `leveldb 1.23`. Because `leveldb 1.23` compiled without RTTI(run time type info), if we use "-frtti", `U typeinfo for leveldb::Comparator` will not be found in `leveldb.a` or `leveldb.so`
-extra_compile_args = ['-Wall', '-g', '-x', 'c++', '-std=c++11', '-fno-rtti']
+include_dirs = []
+library_dirs = []
 
-if platform.system() == "Darwin":
-    extra_compile_args += ["-stdlib=libc++"]
+# add "-fno-rtti" fix `Symbol not found: __ZTIN7leveldb10ComparatorE` when using `leveldb 1.23`. Because `leveldb 1.23` compiled without RTTI(run time type info), if we use "-frtti", `U typeinfo for leveldb::Comparator` will not be found in `leveldb.a` or `leveldb.so`
+if platform.system() == "Windows":
+    extra_compile_args = ['/std:c++17']
+    include_dirs = ['C:/local/include']
+    library_dirs = ['C:/local/lib']
+else:
+    extra_compile_args = ['-Wall', '-g', '-x', 'c++', '-std=c++11', '-fno-rtti']
+    if platform.system() == "Darwin":
+        extra_compile_args += ["-stdlib=libc++"]
 
 ext_modules = [
     Extension(
@@ -27,6 +34,8 @@ ext_modules = [
         sources=['plyvel/_plyvel.pyx', 'plyvel/comparator.cpp'],
         libraries=['leveldb'],
         extra_compile_args=extra_compile_args,
+        include_dirs=include_dirs,
+        library_dirs=library_dirs,
     ),
 ]
 
@@ -53,6 +62,8 @@ setup(
         "Programming Language :: Python",
         "Programming Language :: Python :: 2",
         "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3.14",
         "Topic :: Database",
         "Topic :: Database :: Database Engines/Servers",
         "Topic :: Software Development :: Libraries :: Python Modules",

@@ -5,9 +5,13 @@ Version history
 Unreleased
 ==========
 
+Release target: 2.0.0
+
 * Add Python 3.14 support
 
 * Drop support for Python 3.7 through 3.11
+
+* Add separate GitHub release-asset publish workflow
 
 Plyvel 1.5.1
 ============

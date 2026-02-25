@@ -2,14 +2,15 @@
 Version history
 ===============
 
-Unreleased
-==========
+Plyvel-ci-next: 2.0.1
+============
+* Fix macOS Intel wheel matrix to build for Python 3.12, 3.13, and 3.14.
 
-Release target: 2.0.0
+Plyvel-ci-next 2.0.0
+============
+* Add Python 3.13-3.14 support
 
-* Add Python 3.14 support
-
-* Drop support for Python 3.7 through 3.11
+* Drop support for Python 3.7-3.11
 
 * Add separate GitHub release-asset publish workflow
 

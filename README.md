@@ -9,6 +9,12 @@ This project is a fork of [plyvel-ci](https://github.com/liviaerxin/plyvel), whi
 ## Installation
 
 ```shell
+uv add plyvel-next
+```
+
+or
+
+```shell
 pip install plyvel-next
 ```
 
@@ -29,14 +35,14 @@ db.close()
 
 ## Platform Support
 
-| Platform | Architecture | Python 3.12 | Python 3.13 | Python 3.14 |
-| --- | --- | --- | --- | --- |
-| Linux (manylinux2014) | x86_64 | yes | yes | yes |
-| Linux (manylinux2014) | aarch64 | yes | yes | yes |
-| macOS | x86_64 (Intel) | yes | yes | yes |
-| macOS | universal2 (ARM + Intel) | yes | yes | yes |
-| Windows | x86 | yes | yes | yes |
-| Windows | x86_64 | yes | yes | yes |
+| Platform              | Architecture             | Python 3.12 | Python 3.13 | Python 3.14 |
+| --------------------- | ------------------------ | ----------- | ----------- | ----------- |
+| Linux (manylinux2014) | x86_64                   | yes         | yes         | yes         |
+| Linux (manylinux2014) | aarch64                  | yes         | yes         | yes         |
+| macOS                 | x86_64 (Intel)           | yes         | yes         | yes         |
+| macOS                 | universal2 (ARM + Intel) | yes         | yes         | yes         |
+| Windows               | x86                      | yes         | yes         | yes         |
+| Windows               | x86_64                   | yes         | yes         | yes         |
 
 ---
 
@@ -48,10 +54,10 @@ See [CHANGELOG.md](CHANGELOG.md) for the full history.
 
 ## License
 
-BSD 3-Clause. See [LICENSE](LICENSE).
+Dual licensed: See [LICENSE](LICENSE).
 
 ---
 
 ## About Modding Forge
 
-plyvel-next was made for the Python tooling powering [Modding Forge](https://moddingforge.com) - a community dedicated to Skyrim modding. If you enjoy modding or want to connect with other modders, come say hi!
+**plyvel-next** was made for the Python tooling powering [Modding Forge](https://moddingforge.com) - a community dedicated to Skyrim modding. If you enjoy modding or want to connect with other modders, come say hi!

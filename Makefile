@@ -7,16 +7,16 @@ cython:
 	cython --cplus --fast-fail --annotate plyvel/_plyvel.pyx
 
 ext: cython
-	python setup.py build_ext --inplace --force
+	uv run python setup.py build_ext --inplace --force
 
 doc:
-	python setup.py build_sphinx
+	uv run python setup.py build_sphinx
 	@echo
 	@echo Generated documentation: "file://"$$(readlink -f doc/build/html/index.html)
 	@echo
 
 clean:
-	python setup.py clean
+	uv run python setup.py clean
 	$(RM) plyvel/_plyvel.cpp plyvel/_plyvel*.so
 	$(RM) -r testdb/
 	$(RM) -r doc/build/
@@ -25,7 +25,7 @@ clean:
 	find . -name __pycache__ -delete
 
 test: ext
-	python -m pytest
+	uv run python -m pytest
 
 docker-build-env:
 	docker build -t plyvel-build .

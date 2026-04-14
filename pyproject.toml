@@ -1,8 +1,62 @@
 [build-system]
 requires = [
-    "setuptools>=42",
+    "setuptools>=61",
     "wheel",
     "Cython>=3.0",
 ]
-
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "plyvel-ci"
+version = "2.0.1"
+description = "Plyvel, a fast and feature-rich Python interface to LevelDB"
+readme = "README.rst"
+license = {text = "BSD License"}
+authors = [
+    {name = "Wouter Bolsterlee", email = "wouter@bolsterl.ee"},
+]
+requires-python = ">=3.12,<3.15"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: BSD License",
+    "Operating System :: POSIX",
+    "Programming Language :: C++",
+    "Programming Language :: Cython",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Database",
+    "Topic :: Database :: Database Engines/Servers",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+[project.urls]
+Homepage = "https://github.com/wbolster/plyvel"
+
+[project.optional-dependencies]
+dev = [
+    "cibuildwheel",
+    "Cython>=3.0",
+    "sphinx",
+    "tox",
+    "pytest>=3.6",
+    "pytest-cov",
+    "setuptools",
+]
+test = [
+    "pytest>=3.6",
+    "pytest-cov",
+    "setuptools",
+]
+
+[tool.setuptools.packages.find]
+include = ["plyvel*"]
+
+[tool.pytest.ini_options]
+addopts = "-sv"
+testpaths = ["test"]

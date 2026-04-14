@@ -3,7 +3,7 @@ import os.path
 
 version_file = os.path.join(
     os.path.dirname(__file__),
-    '../plyvel/_version.py')
+    '../plyvel_next/_version.py')
 with open(version_file) as fp:
     exec(fp.read(), globals(), locals())
 

@@ -35,7 +35,7 @@ def db_dir(request):
 @pytest.fixture
 def db(request):
     name = tempfile.mkdtemp()
-    db = plyvel.DB(name, create_if_missing=True, error_if_exists=True)
+    db = plyvel_next.DB(name, create_if_missing=True, error_if_exists=True)
 
     def finalize():
         db.close()
@@ -50,43 +50,43 @@ def db(request):
 #
 
 def test_version():
-    v = plyvel.__leveldb_version__
+    v = plyvel_next.__leveldb_version__
     assert v.startswith('1.')
 
 # Skip the test
-# [Add Azure Pipelines for CI/CD - cross-platform wheels](https://github.com/wbolster/plyvel/pull/131/files#diff-6589f2b9ca434ef8b53c7c9126e03a83a513bcb10d75dfae4bce4d22cfd20369)
+# [Add Azure Pipelines for CI/CD - cross-platform wheels](https://github.com/wbolster/plyvel_next/pull/131/files#diff-6589f2b9ca434ef8b53c7c9126e03a83a513bcb10d75dfae4bce4d22cfd20369)
 # def test_open_read_only_dir(db_dir):
 #     # Opening a DB in a read-only dir should not work
 #     try:
 #         os.chmod(db_dir, stat.S_IRUSR | stat.S_IXUSR)
 #         if sys.platform == "win32":
-#             raise pytest.xfail("plyvel._plyvel.Error: b'Invalid argument: "
+#             raise pytest.xfail("plyvel_next._plyvel_next.Error: b'Invalid argument: "
 #                                "...\\AppData\\Local\\Temp\\tmpql45r6ad: does not exist")
 #         else:
-#             with pytest.raises(plyvel.IOError):
-#                 plyvel.DB(db_dir)
+#             with pytest.raises(plyvel_next.IOError):
+#                 plyvel_next.DB(db_dir)
 #     finally:
 #         # (Needed for Windows) Make dir writeable again so cleanup can occur for this test
 #         os.chmod(db_dir, stat.S_IWUSR | stat.S_IRUSR | stat.S_IXUSR)
 
 def test_open_no_create(db_dir):
-    with pytest.raises(plyvel.Error):
-        plyvel.DB(db_dir, create_if_missing=False)
+    with pytest.raises(plyvel_next.Error):
+        plyvel_next.DB(db_dir, create_if_missing=False)
 
 
 def test_open_fresh(db_dir):
-    db = plyvel.DB(db_dir, create_if_missing=True)
+    db = plyvel_next.DB(db_dir, create_if_missing=True)
     db.close()
-    with pytest.raises(plyvel.Error):
-        plyvel.DB(db_dir, error_if_exists=True)
+    with pytest.raises(plyvel_next.Error):
+        plyvel_next.DB(db_dir, error_if_exists=True)
 
 
 def test_open_no_compression(db_dir):
-    plyvel.DB(db_dir, compression=None, create_if_missing=True)
+    plyvel_next.DB(db_dir, compression=None, create_if_missing=True)
 
 
 def test_open_many_options(db_dir):
-    plyvel.DB(
+    plyvel_next.DB(
         db_dir, create_if_missing=True, error_if_exists=False,
         paranoid_checks=True, write_buffer_size=16 * 1024 * 1024,
         max_open_files=512, lru_cache_size=64 * 1024 * 1024,
@@ -96,16 +96,16 @@ def test_open_many_options(db_dir):
 
 def test_invalid_open(db_dir):
     with pytest.raises(TypeError):
-        plyvel.DB(123)
+        plyvel_next.DB(123)
 
     with pytest.raises(TypeError):
-        plyvel.DB(db_dir, write_buffer_size='invalid')
+        plyvel_next.DB(db_dir, write_buffer_size='invalid')
 
     with pytest.raises(TypeError):
-        plyvel.DB(db_dir, lru_cache_size='invalid')
+        plyvel_next.DB(db_dir, lru_cache_size='invalid')
 
     with pytest.raises(ValueError):
-        plyvel.DB(db_dir, compression='invalid', create_if_missing=True)
+        plyvel_next.DB(db_dir, compression='invalid', create_if_missing=True)
 
 
 @pytest.mark.skipif(sys.getfilesystemencoding() != 'utf-8',
@@ -113,13 +113,13 @@ def test_invalid_open(db_dir):
 def test_open_unicode_name(db_dir):
     db_dir = os.path.join(db_dir, 'úñîçøđê_name')
     os.makedirs(db_dir)
-    plyvel.DB(db_dir, create_if_missing=True)
+    plyvel_next.DB(db_dir, create_if_missing=True)
 
 
 def test_open_close(db_dir):
     # Create a database with options that result in additional object
     # allocation (e.g. LRU cache).
-    db = plyvel.DB(
+    db = plyvel_next.DB(
         db_dir,
         create_if_missing=True,
         lru_cache_size=1024 * 1024,
@@ -162,7 +162,7 @@ def test_open_close(db_dir):
 
 def test_large_lru_cache(db_dir):
     # Use a 2 GB size (does not fit in a 32-bit signed int)
-    plyvel.DB(db_dir, create_if_missing=True, lru_cache_size=2 * 1024**3)
+    plyvel_next.DB(db_dir, create_if_missing=True, lru_cache_size=2 * 1024**3)
 
 
 def test_put(db):
@@ -840,7 +840,7 @@ def test_compaction(db):
 
 def test_approximate_sizes(db_dir):
     # Write some data to a fresh database
-    db = plyvel.DB(db_dir, create_if_missing=True, error_if_exists=True)
+    db = plyvel_next.DB(db_dir, create_if_missing=True, error_if_exists=True)
     value = b'a' * 100
     with db.write_batch() as wb:
         for i in range(1000):
@@ -850,7 +850,7 @@ def test_approximate_sizes(db_dir):
     # Close and reopen the database
     db.close()
     del wb, db
-    db = plyvel.DB(db_dir, create_if_missing=False)
+    db = plyvel_next.DB(db_dir, create_if_missing=False)
 
     with pytest.raises(TypeError):
         db.approximate_size(1, 2)
@@ -876,24 +876,24 @@ def test_approximate_sizes(db_dir):
 
 
 def test_repair_db(db_dir):
-    db = plyvel.DB(db_dir, create_if_missing=True)
+    db = plyvel_next.DB(db_dir, create_if_missing=True)
     db.put(b'foo', b'bar')
     db.close()
     del db
 
-    plyvel.repair_db(db_dir)
-    db = plyvel.DB(db_dir)
+    plyvel_next.repair_db(db_dir)
+    db = plyvel_next.DB(db_dir)
     assert db.get(b'foo') == b'bar'
 
 
 def test_destroy_db(db_dir):
     db_dir = os.path.join(db_dir, 'subdir')
-    db = plyvel.DB(db_dir, create_if_missing=True)
+    db = plyvel_next.DB(db_dir, create_if_missing=True)
     db.put(b'foo', b'bar')
     db.close()
     del db
 
-    plyvel.destroy_db(db_dir)
+    plyvel_next.destroy_db(db_dir)
     assert not os.path.lexists(db_dir)
 
 
@@ -948,13 +948,13 @@ def test_threading(db):
 
 def test_invalid_comparator(db_dir):
     with pytest.raises(ValueError):
-        plyvel.DB(db_dir, comparator=None, comparator_name=b'invalid')
+        plyvel_next.DB(db_dir, comparator=None, comparator_name=b'invalid')
 
     with pytest.raises(TypeError):
-        plyvel.DB(db_dir, comparator=lambda x, y: 1, comparator_name=12)
+        plyvel_next.DB(db_dir, comparator=lambda x, y: 1, comparator_name=12)
 
     with pytest.raises(TypeError):
-        plyvel.DB(db_dir, comparator=b'not-a-callable',
+        plyvel_next.DB(db_dir, comparator=b'not-a-callable',
                   comparator_name=b'invalid')
 
 
@@ -971,7 +971,7 @@ def test_comparator(db_dir):
 
     comparator_name = b"CaseInsensitiveComparator"
 
-    db = plyvel.DB(
+    db = plyvel_next.DB(
         db_dir,
         create_if_missing=True,
         comparator=comparator,
@@ -1109,7 +1109,7 @@ def test_raw_iterator(db):
 
     it.seek_to_first()
     it.prev()
-    with pytest.raises(plyvel.IteratorInvalidError):
+    with pytest.raises(plyvel_next.IteratorInvalidError):
         it.value()
     assert not it.valid()
 
@@ -1123,7 +1123,7 @@ def test_raw_iterator(db):
     assert it.key() == b'999'
 
     it.next()
-    with pytest.raises(plyvel.IteratorInvalidError):
+    with pytest.raises(plyvel_next.IteratorInvalidError):
         it.key()
 
 
@@ -1137,7 +1137,7 @@ def test_raw_iterator_empty_db(db):
     it.seek_to_last()
     assert not it.valid()
 
-    with pytest.raises(plyvel.IteratorInvalidError):
+    with pytest.raises(plyvel_next.IteratorInvalidError):
         it.key()
 
 
@@ -1147,7 +1147,7 @@ def test_raw_iterator_snapshot(db):
     it = sn.raw_iterator()
     it.seek_to_first()
     assert not it.valid()
-    with pytest.raises(plyvel.IteratorInvalidError):
+    with pytest.raises(plyvel_next.IteratorInvalidError):
         it.key()
 
 
@@ -1164,12 +1164,12 @@ def test_raw_iterator_closing(db):
 
 
 def test_access_DB_name_attr(db_dir):
-    db = plyvel.DB(db_dir, create_if_missing=True)
+    db = plyvel_next.DB(db_dir, create_if_missing=True)
     assert db.name == db_dir
 
 
 def test_try_changing_DB_name_attr(db_dir):
-    db = plyvel.DB(db_dir, create_if_missing=True)
+    db = plyvel_next.DB(db_dir, create_if_missing=True)
     with pytest.raises(AttributeError):
         db.name = 'a'
 
@@ -1177,7 +1177,7 @@ def test_try_changing_DB_name_attr(db_dir):
 def test_context_manager(db_dir):
     key = b'the-key'
     value = b'the-value'
-    with plyvel.DB(db_dir, create_if_missing=True) as db:
+    with plyvel_next.DB(db_dir, create_if_missing=True) as db:
         db.put(key, value)
         assert db.get(key) == value
 

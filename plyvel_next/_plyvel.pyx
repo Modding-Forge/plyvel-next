@@ -13,7 +13,7 @@
 """
 Plyvel, a Python LevelDB interface.
 
-Use plyvel.DB() to create or open a database.
+Use plyvel_next.DB() to create or open a database.
 """
 
 import sys
@@ -36,8 +36,8 @@ from libc.string cimport const_char
 from libcpp.string cimport string
 from libcpp cimport bool as c_bool
 
-cimport plyvel.leveldb as leveldb
-from plyvel.leveldb cimport (
+cimport plyvel_next.leveldb as leveldb
+from plyvel_next.leveldb cimport (
     BytewiseComparator,
     Cache,
     Comparator,
@@ -53,7 +53,7 @@ from plyvel.leveldb cimport (
     WriteOptions,
 )
 
-from plyvel.comparator cimport NewPlyvelCallbackComparator
+from plyvel_next.comparator cimport NewPlyvelCallbackComparator
 
 
 __leveldb_version__ = '%d.%d' % (leveldb.kMajorVersion,
@@ -292,7 +292,7 @@ cdef class DB:
         self.close()
 
     def __repr__(self):
-        return '<plyvel.DB with name %r%s at 0x%s>' % (
+        return '<plyvel_next.DB with name %r%s at 0x%s>' % (
             self.name,
             ' (closed)' if self.closed else '',
             hex(id(self)),
@@ -465,7 +465,7 @@ cdef class PrefixedDB:
         self.prefix = prefix
 
     def __repr__(self):
-        return '<plyvel.PrefixedDB with prefix %r at 0x%s>' % (
+        return '<plyvel_next.PrefixedDB with prefix %r at 0x%s>' % (
             self.prefix,
             hex(id(self)),
         )

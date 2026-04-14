@@ -2,7 +2,7 @@
 
 set -ex
 
-LEVELDB_VERSION=1.24
+LEVELDB_VERSION=1.23
 
 SUDO=$(command -v sudo || true)
 INSTALL_PREFIX="/usr/local"

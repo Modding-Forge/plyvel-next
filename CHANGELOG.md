@@ -13,7 +13,6 @@
   for Modding Forge modifications since commit
   `e10f4c329aabe4d9e2b596ef0727a018fdc37db7`.
 - Convert `NEWS.rst` to `CHANGELOG.md`.
-- Update LevelDB 1.23 to 1.24 in install scripts.
 - Update Snappy 1.1.9 to 1.2.1 in install scripts; remove no-longer-needed
   inline patch.
 - Modernize `Makefile`: fix paths to `plyvel_next/`, replace deprecated

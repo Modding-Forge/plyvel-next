@@ -2,6 +2,7 @@
 
 ## plyvel-next 2.1.0
 
+- update manylinux configurations for x86_64 and aarch64 architectures
 - Rename package to `plyvel-next` (previously `plyvel-ci`); import as
   `plyvel_next`.
 - Migrate project tooling to uv (`pyproject.toml` fully self-contained,

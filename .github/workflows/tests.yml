@@ -45,9 +45,15 @@ jobs:
               build: "cp312-* cp313-* cp314-*"
 
           - os: ubuntu-latest
-            name: manylinux
+            name: manylinux-x86_64
             cibw:
-              arch: "auto aarch64"
+              arch: auto
+              build: "cp312-* cp313-* cp314-*"
+
+          - os: ubuntu-24.04-arm
+            name: manylinux-aarch64
+            cibw:
+              arch: auto
               build: "cp312-* cp313-* cp314-*"
 
           - os: windows-2022
@@ -106,12 +112,6 @@ jobs:
         with:
           python-version: "3.12"
           architecture: ${{ matrix.architecture }}
-
-      - name: Set up QEMU
-        if: runner.os == 'Linux'
-        uses: docker/setup-qemu-action@v3
-        with:
-          platforms: all
 
       # From 10/23/2019, GitHub Actions default shell on Windows runners is changing to `PowerShell`
       # However, cibuildwheel still use `CMD` instead of `PowerShell`, test by using "(dir 2>&1 *`|echo CMD);&<# rem #>echo PowerShell" in

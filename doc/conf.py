@@ -15,7 +15,7 @@ source_suffix = '.rst'
 
 master_doc = 'index'
 project = u'Plyvel'
-copyright = u'2012‒{}, Wouter Bolsterlee'.format(
+copyright = u'2012-{}, Wouter Bolsterlee'.format(
     datetime.datetime.now().year)
 version = __version__
 release = __version__

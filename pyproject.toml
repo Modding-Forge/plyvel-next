@@ -7,13 +7,16 @@ requires = [
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "plyvel-ci"
-version = "2.0.1"
-description = "Plyvel, a fast and feature-rich Python interface to LevelDB"
-readme = "README.rst"
-license = {text = "BSD License"}
+name = "plyvel-next"
+version = "2.1.0"
+description = "A fast and feature-rich Python interface to LevelDB"
+readme = "README.md"
+license = {text = "BSD-3-Clause AND MIT"}
 authors = [
-    {name = "Wouter Bolsterlee", email = "wouter@bolsterl.ee"},
+    {name = "Wouter Bolsterlee"},
+]
+maintainers = [
+    {name = "Modding Forge", email = "info@moddingforge.com"},
 ]
 requires-python = ">=3.12,<3.15"
 classifiers = [
@@ -22,7 +25,10 @@ classifiers = [
     "Intended Audience :: Information Technology",
     "Intended Audience :: Science/Research",
     "License :: OSI Approved :: BSD License",
+    "License :: OSI Approved :: MIT License",
     "Operating System :: POSIX",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: MacOS",
     "Programming Language :: C++",
     "Programming Language :: Cython",
     "Programming Language :: Python",
@@ -36,7 +42,9 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/wbolster/plyvel"
+Homepage = "https://moddingforge.com"
+Repository = "https://github.com/Modding-Forge/plyvel-next"
+Changelog = "https://github.com/Modding-Forge/plyvel-next/blob/master/CHANGELOG.md"
 
 [project.optional-dependencies]
 dev = [
@@ -55,7 +63,7 @@ test = [
 ]
 
 [tool.setuptools.packages.find]
-include = ["plyvel*"]
+include = ["plyvel_next*"]
 
 [tool.pytest.ini_options]
 addopts = "-sv"

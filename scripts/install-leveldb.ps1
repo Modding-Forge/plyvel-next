@@ -1,4 +1,4 @@
-$LEVELDB_VERSION="1.23"
+$LEVELDB_VERSION="1.24"
 
 # Check env
 if (-not (Test-Path env:CIBW_ARCHS_WINDOWS)) { $env:CIBW_ARCHS_WINDOWS = "AMD64" }

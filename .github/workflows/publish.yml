@@ -1,4 +1,4 @@
-name: plyvel publish
+name: Publish
 
 on:
   workflow_dispatch:
@@ -10,9 +10,6 @@ on:
   push:
     tags:
       - "v*"
-
-permissions:
-  contents: write
 
 jobs:
   sdist:
@@ -131,10 +128,38 @@ jobs:
           name: wheel-${{ matrix.name }}
           path: ./wheelhouse/*.whl
 
-  release:
-    name: Publish GitHub Release assets
+  publish-pypi:
+    name: Publish to PyPI
     needs: [sdist, wheel]
     runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write   # required for OIDC Trusted Publisher
+
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: sdist
+          path: dist/
+
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: wheel-*
+          merge-multiple: true
+          path: dist/
+
+      - uses: astral-sh/setup-uv@v5
+
+      - name: Publish
+        run: uv publish
+
+  publish-github:
+    name: Create GitHub Release
+    needs: [sdist, wheel]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
     steps:
       - name: Resolve release tag
         id: tag
@@ -149,24 +174,23 @@ jobs:
             exit 1
           fi
 
-      - name: Download sdist artifact
-        uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v4
         with:
           name: sdist
-          path: dist
+          path: dist/
 
-      - name: Download wheel artifacts
-        uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v4
         with:
           pattern: wheel-*
-          path: dist
           merge-multiple: true
+          path: dist/
 
       - name: Create GitHub release with assets
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ steps.tag.outputs.tag }}
+          body: |
+            See [CHANGELOG.md](https://github.com/Modding-Forge/plyvel-next/blob/master/CHANGELOG.md) for details.
           files: |
             dist/*.tar.gz
             dist/*.whl
-          generate_release_notes: true

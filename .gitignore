@@ -1,16 +1,46 @@
-*.py[co]
+# Python
 __pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pdb
 
-build/
+# Distribution / packaging
 dist/
+build/
 *.egg-info/
+*.egg
+MANIFEST
 
+# Virtual environments
+.venv/
+.venv*/
+venv/
+env/
+
+# Test & coverage
 .coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
 .tox/
 
-plyvel/_plyvel.cpp
-plyvel/_plyvel.html
-plyvel/_plyvel*.so
+# Cython build artifacts
+plyvel_next/_plyvel.cpp
+plyvel_next/_plyvel.html
+plyvel_next/_plyvel*.so
+plyvel_next/_plyvel*.pyd
 
-.venv39/
+# Docs build
+doc/build/
+
+# IDE / editor
 .vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+

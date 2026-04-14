@@ -478,7 +478,7 @@ wheels = [
 ]
 
 [[package]]
-name = "plyvel-ci"
+name = "plyvel-next"
 version = "2.0.1"
 source = { editable = "." }
 

@@ -4,23 +4,22 @@ all: cython ext
 
 cython:
 	cython --version
-	cython --cplus --fast-fail --annotate plyvel/_plyvel.pyx
+	cython --cplus --fast-fail --annotate plyvel_next/_plyvel.pyx
 
 ext: cython
 	uv run python setup.py build_ext --inplace --force
 
 doc:
-	uv run python setup.py build_sphinx
+	uv run sphinx-build -W -b html doc doc/build/html
 	@echo
 	@echo Generated documentation: "file://"$$(readlink -f doc/build/html/index.html)
 	@echo
 
 clean:
-	uv run python setup.py clean
-	$(RM) plyvel/_plyvel.cpp plyvel/_plyvel*.so
-	$(RM) -r testdb/
+	$(RM) plyvel_next/_plyvel.cpp plyvel_next/_plyvel*.so
+	$(RM) -r build/ testdb/
 	$(RM) -r doc/build/
-	$(RM) -r plyvel.egg-info/
+	$(RM) -r plyvel_next.egg-info/
 	find . -name '*.py[co]' -delete
 	find . -name __pycache__ -delete
 

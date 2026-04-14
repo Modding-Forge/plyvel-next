@@ -1,4 +1,4 @@
-$SNAPPY_VERSION="1.1.9"
+$SNAPPY_VERSION="1.2.1"
 
 # Check env
 if (-not (Test-Path env:CIBW_ARCHS_WINDOWS)) { $env:CIBW_ARCHS_WINDOWS = "AMD64" }

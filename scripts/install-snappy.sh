@@ -1,11 +1,9 @@
 #!/usr/bin/env bash
 set -ex
 
-SNAPPY_VERSION=1.1.9
+SNAPPY_VERSION=1.2.1
 SUDO=$(command -v sudo || true)
 SCRIPT="$( cd "$( dirname $0 )" && pwd )"
-PATCH_FILE=$SCRIPT/1.1.9-0001-fix-inlining-failure.patch # for snappy 1.1.9
-echo $PATCH_FILE
 
 # Check env
 if [[ "$(uname)" == "Darwin" ]]; then
@@ -40,10 +38,6 @@ mkdir -p ~/opt/snappy
 cd ~/opt/snappy
 curl -sL https://codeload.github.com/google/snappy/tar.gz/${SNAPPY_VERSION} | tar xzf -
 cd ./snappy-*
-
-# Patch inline
-echo $PWD
-patch < $PATCH_FILE
 
 # Compile snappy
 

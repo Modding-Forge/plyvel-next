@@ -14,7 +14,7 @@ import time
 
 import pytest
 
-import plyvel
+import plyvel_next
 
 
 #

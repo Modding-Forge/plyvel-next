@@ -22,7 +22,7 @@ ext_modules = [
     Extension(
         "plyvel_next._plyvel",
         language="c++",
-        sources=["plyvel_next/_plyvel_next.pyx", "plyvel_next/comparator.cpp"],
+        sources=["plyvel_next/_plyvel.pyx", "plyvel_next/comparator.cpp"],
         libraries=["leveldb"],
         extra_compile_args=extra_compile_args,
         include_dirs=include_dirs,

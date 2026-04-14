@@ -1,6 +1,6 @@
 include Makefile
-include requirements*.txt
-include *.rst
+include *.md
+include LICENSE
 include test/*.py
 include doc/conf.py doc/*.rst
 include plyvel_next/*.pyx plyvel_next/*.pxd plyvel_next/*.pxi plyvel_next/comparator.h

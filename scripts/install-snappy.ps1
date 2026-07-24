@@ -51,4 +51,4 @@ if (-not $configured) {
     exit 1
 }
 
-cmake --build . --target install --config Release
+cmake --build . --target install --config Release -DSNAPPY_HAVE_BMI2=0

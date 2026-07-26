@@ -39,6 +39,7 @@ foreach ($generator in $generators) {
         -DCMAKE_POSITION_INDEPENDENT_CODE=ON `
         -DSNAPPY_BUILD_BENCHMARKS=OFF `
         -DSNAPPY_BUILD_TESTS=OFF `
+        -DSNAPPY_HAVE_BMI2=OFF `
         ..
     if ($LASTEXITCODE -eq 0) {
         $configured = $true
@@ -51,4 +52,7 @@ if (-not $configured) {
     exit 1
 }
 
-cmake --build . --target install --config Release -DSNAPPY_HAVE_BMI2=0
+cmake --build . --target install --config Release
+if ($LASTEXITCODE -ne 0) {
+    exit $LASTEXITCODE
+}

@@ -1,5 +1,12 @@
 # Changelog
 
+## plyvel-next 2.1.2
+
+- Restore Snappy support in Windows wheels by applying the BMI2 setting during CMake configuration.
+- Disable BMI2 for Snappy builds on all supported architectures.
+- Fail Windows dependency setup when the native Snappy build fails.
+
+
 ## plyvel-next 2.1.0
 
 - update manylinux configurations for x86_64 and aarch64 architectures

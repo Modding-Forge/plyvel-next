@@ -64,6 +64,7 @@ cmake \
     -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
     -DSNAPPY_BUILD_BENCHMARKS=OFF \
     -DSNAPPY_BUILD_TESTS=OFF \
+    -DSNAPPY_HAVE_BMI2=OFF \
     ..
 
 cmake --build . --target install
